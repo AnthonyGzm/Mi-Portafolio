@@ -1,0 +1,209 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Design tokens - Bento / Dashboard Aesthetic ─────────────────────────────────────────── */
+:root {
+  /* Aggressive Rose/Crimson accent */
+  --accent:      #e11d48;      /* Rose 600 */
+  --accent-lt:   #fb7185;      /* Rose 400 */
+  --accent-dim:  rgba(225, 29, 72, 0.1);
+  --accent-bdr:  rgba(225, 29, 72, 0.25);
+}
+
+/* Light theme - Clean & Professional */
+html {
+  --bg:       #f8fafc;
+  --bg2:      #ffffff;
+  --bg3:      #f1f5f9;
+  --card-bg:  rgba(255, 255, 255, 0.6);
+  --card-hover-bg: rgba(255, 255, 255, 0.9);
+  --surface:  #ffffff;
+  --border:   rgba(15, 23, 42, 0.08);
+  --border-hover: rgba(225, 29, 72, 0.3);
+  --text:     #0f172a;
+  --text2:    #475569;
+  --text3:    #64748b;
+  --shadow:   rgba(0, 0, 0, 0.04);
+  
+  /* Hero Video Overlay - Light */
+  --hero-overlay-start: rgba(248, 250, 252, 0.85);
+  --hero-overlay-mid:   rgba(248, 250, 252, 0.95);
+  --hero-overlay-end:   transparent;
+}
+
+/* Dark theme - Carbon Red (Aggressive & Distinctive) */
+html.dark {
+  --bg:       #0a0a0a;         /* Neutral 950 - Carbon */
+  --bg2:      #171717;         /* Neutral 900 */
+  --bg3:      #262626;         /* Neutral 800 */
+  --card-bg:  rgba(23, 23, 23, 0.5);
+  --card-hover-bg: rgba(38, 38, 38, 0.7);
+  --surface:  rgba(23, 23, 23, 0.8);
+  --border:   rgba(255, 255, 255, 0.05);
+  --border-hover: rgba(244, 63, 94, 0.4);
+  --text:     #fafafa;         
+  --text2:    #a3a3a3;         
+  --text3:    #737373;         
+  --shadow:   rgba(0, 0, 0, 0.5);
+  --accent:   #fb7185;         /* Rose 400 */
+  --accent-lt:#fda4af;         /* Rose 300 */
+  --accent-dim: rgba(244, 63, 94, 0.15);
+  --accent-bdr: rgba(244, 63, 94, 0.3);
+
+  /* Hero Video Overlay - Dark */
+  --hero-overlay-start: rgba(10, 10, 10, 0.4);
+  --hero-overlay-mid:   rgba(10, 10, 10, 0.7);
+  --hero-overlay-end:   transparent;
+}
+
+/* ─── Reset ──────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 100px;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: 'Outfit', 'Inter', sans-serif;
+  overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  line-height: 1.6;
+}
+
+
+
+/* ─── Scrollbar ──────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--text3); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+/* ─── Selection ──────────────────────────────────────────────── */
+::selection {
+  background: var(--accent-dim);
+  color: var(--text);
+}
+
+/* ─── Layout Utils ───────────────────────────────────────────── */
+.bento-card {
+  background: var(--card-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 8px 32px var(--shadow), inset 0 1px 0 0 rgba(255,255,255,0.05);
+}
+
+.bento-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  box-shadow: inset 0 0 0 1px var(--border-hover);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.bento-card:hover {
+  background: var(--card-hover-bg);
+  transform: translateY(-4px);
+  box-shadow: 0 16px 48px var(--shadow), 0 0 30px var(--accent-dim), inset 0 1px 0 0 rgba(255,255,255,0.1);
+  border-color: transparent;
+}
+
+.bento-card:hover::after {
+  opacity: 1;
+}
+
+.accent-text {
+  color: var(--accent);
+  background: linear-gradient(135deg, var(--accent-lt), var(--accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ─── Hero Animated Background ───────────────────────────────── */
+.hero-anim-bg {
+  position: relative;
+}
+.hero-glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.3;
+  pointer-events: none;
+  animation: floatOrb 12s ease-in-out infinite alternate;
+}
+.hero-glow-1 {
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, var(--accent) 0%, transparent 60%);
+  top: -10%;
+  left: -20%;
+}
+.hero-glow-2 {
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(225, 29, 72, 0.5) 0%, transparent 60%);
+  bottom: -20%;
+  right: -10%;
+  animation-delay: -6s;
+}
+
+html:not(.dark) .hero-glow {
+  opacity: 0.15; 
+}
+
+@keyframes floatOrb {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(60px, -40px) scale(1.1); }
+}
+
+/* ─── Form inputs ────────────────────────────────────────────── */
+.field {
+  width: 100%;
+  background: rgba(15, 23, 42, 0.4);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 0.85rem 1.25rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85rem;
+  border-radius: 12px;
+  outline: none;
+  transition: all 0.3s ease;
+}
+html:not(.dark) .field {
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.field:focus { 
+  border-color: var(--accent); 
+  box-shadow: 0 0 0 1px var(--accent), 0 0 15px var(--accent-dim); 
+  background: var(--card-hover-bg);
+}
+.field::placeholder { color: var(--text3); }
+textarea.field { resize: vertical; }
+
+/* ─── Responsive helpers ─────────────────────────────────────── */
+@media (max-width: 768px) {
+  .hide-mobile { display: none !important; }
+}
+@media (min-width: 769px) {
+  .hide-desktop { display: none !important; }
+}
