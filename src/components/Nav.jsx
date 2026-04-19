@@ -5,7 +5,8 @@ import { personal } from '../data'
 import { Menu, X, Hexagon, Sun, Moon } from 'lucide-react'
 
 const navLinks = [
-  { name: 'Inicio', href: '#hero', id: 'hero' },
+  { name: 'Inicio', href: '#hero-header', id: 'hero-header' },
+  { name: 'About', href: '#about', id: 'about' },
   { name: 'Skills', href: '#skills', id: 'skills' },
   { name: 'Proyectos', href: '#projects', id: 'projects' },
   { name: 'Contacto', href: '#contact', id: 'contact' },
@@ -35,18 +36,15 @@ export default function Nav() {
         transition: 'all 0.3s ease'
       }}>
         <div style={{ maxWidth: 1200, width: '100%', margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          
-          <a href="#hero" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: 800, fontSize: '1.1rem', color: 'var(--text)' }}>
-            <div style={{ width: 32, height: 32, background: 'var(--accent)', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyItems: 'center', color: '#fff', justifyContent: 'center' }}>
-              <Hexagon size={18} fill="currentColor" />
-            </div>
+
+          <a href="#hero-header" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: 800, fontSize: '1.2rem', color: 'var(--text)' }}>
             <span style={{ letterSpacing: '-0.5px' }}>{personal.initials}</span>
           </a>
 
           <div className="hide-mobile" style={{ display: 'flex', gap: '2rem', alignItems: 'center' }}>
             {navLinks.map((link) => (
-              <a 
-                key={link.name} 
+              <a
+                key={link.name}
                 href={link.href}
                 style={{
                   fontSize: '0.85rem', fontWeight: 600,
@@ -56,7 +54,7 @@ export default function Nav() {
                 }}
                 onMouseEnter={e => e.currentTarget.style.color = 'var(--text)'}
                 onMouseLeave={e => {
-                  if(active !== link.id) e.currentTarget.style.color = 'var(--text3)'
+                  if (active !== link.id) e.currentTarget.style.color = 'var(--text3)'
                 }}
               >
                 {link.name}
@@ -65,14 +63,14 @@ export default function Nav() {
                 )}
               </a>
             ))}
-            
+
             {/* Desktop Theme Toggle */}
-            <button 
-              onClick={toggle} 
+            <button
+              onClick={toggle}
               title="Alternar Tema"
-              style={{ 
-                background: 'var(--bg2)', border: '1px solid var(--border)', 
-                color: 'var(--text2)', cursor: 'pointer', display: 'flex', 
+              style={{
+                background: 'var(--bg2)', border: '1px solid var(--border)',
+                color: 'var(--text2)', cursor: 'pointer', display: 'flex',
                 alignItems: 'center', justifyContent: 'center',
                 width: 36, height: 36, borderRadius: '8px',
                 transition: 'all 0.2s'
@@ -86,8 +84,8 @@ export default function Nav() {
 
           <div className="hide-desktop" style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
             {/* Mobile Theme Toggle right next to menu button */}
-            <button 
-              onClick={toggle} 
+            <button
+              onClick={toggle}
               style={{ background: 'transparent', border: 'none', color: 'var(--text)', display: 'flex' }}
             >
               {dark ? <Sun size={22} /> : <Moon size={22} />}
@@ -109,8 +107,8 @@ export default function Nav() {
             <X size={32} />
           </button>
           {navLinks.map((link) => (
-            <a 
-              key={link.name} 
+            <a
+              key={link.name}
               href={link.href}
               onClick={() => setMobileOpen(false)}
               style={{ fontSize: '2rem', fontWeight: 800, color: active === link.id ? 'var(--accent)' : 'var(--text)' }}

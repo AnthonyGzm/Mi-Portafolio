@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
 
-const SECTION_IDS = ['hero', 'skills', 'projects', 'contact']
+const SECTION_IDS = ['hero-header', 'about', 'skills', 'projects', 'contact']
 
 export function useActiveSection() {
-  const [active, setActive] = useState('hero')
+  const [active, setActive] = useState('hero-header')
 
   useEffect(() => {
     const handler = () => {

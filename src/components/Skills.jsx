@@ -4,7 +4,7 @@ import * as Icons from 'lucide-react'
 
 export default function Skills() {
   const mainCategories = skills.slice(0, 3)
-  const additionalCat = skills[3]
+  const additionalSkills = skills.slice(3).flatMap(cat => cat.items)
 
   return (
     <section id="skills" style={{ paddingTop: '5rem', paddingBottom: '3rem' }}>
@@ -63,13 +63,13 @@ export default function Skills() {
         })}
       </div>
 
-      {additionalCat && (
+      {additionalSkills.length > 0 && (
         <div style={{ textAlign: 'center' }}>
           <h3 style={{ fontSize: '1.1rem', fontWeight: 600, color: 'var(--text)', marginBottom: '1.5rem' }}>
-            Tecnologías Adicionales
+            Herramientas y Metodologías
           </h3>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.6rem', justifyContent: 'center', maxWidth: 800, margin: '0 auto' }}>
-            {additionalCat.items.map(item => (
+            {additionalSkills.map(item => (
               <span 
                 key={item} 
                 style={{

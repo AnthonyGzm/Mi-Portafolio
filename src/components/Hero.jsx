@@ -14,13 +14,20 @@ export default function Hero() {
   }
 
   return (
-    <motion.section 
-      variants={containerVariants}
-      initial="hidden"
-      animate="visible"
-      id="hero"
-      style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))', gap: '1.5rem', paddingTop: '6rem' }}
-    >
+    <section id="about" style={{ paddingTop: '5rem', paddingBottom: '3rem' }}>
+      <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
+        <h2 style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--text)', marginBottom: '1rem' }}>
+          About Me
+        </h2>
+      </div>
+
+      <motion.div 
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: '-50px' }}
+        style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))', gap: '1.5rem' }}
+      >
       {/* Left Column: Bio & Traits */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
         
@@ -60,6 +67,7 @@ export default function Hero() {
         <Experience />
       </motion.div>
 
-    </motion.section>
+      </motion.div>
+    </section>
   )
 }
