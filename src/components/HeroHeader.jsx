@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import { useState, useEffect } from 'react'
 import { personal, socials } from '../data'
 import { Download, Mail, ArrowDown } from 'lucide-react'
 
@@ -18,6 +19,50 @@ const LinkedinIcon = ({ size = 24, ...props }) => (
 )
 
 const SOCIAL_ICONS = { GitHub: <GithubIcon size={18} />, LinkedIn: <LinkedinIcon size={18} />, CV: <Download size={18} />, Email: <Mail size={18} /> }
+
+const Typewriter = ({ text, delay = 0 }) => {
+  const [displayedText, setDisplayedText] = useState('')
+  
+  useEffect(() => {
+    let timeout
+    let i = 0
+    let interval
+    let pauseTimeout
+
+    const startTyping = () => {
+      i = 0
+      setDisplayedText('')
+      interval = setInterval(() => {
+        setDisplayedText(text.substring(0, i + 1))
+        i++
+        if (i === text.length) {
+          clearInterval(interval)
+          pauseTimeout = setTimeout(startTyping, 3000) // Pause for 3 seconds before repeating
+        }
+      }, 60)
+    }
+
+    timeout = setTimeout(startTyping, delay)
+    
+    return () => {
+      clearTimeout(timeout)
+      clearInterval(interval)
+      clearTimeout(pauseTimeout)
+    }
+  }, [text, delay])
+  
+  return (
+    <>
+      {displayedText}
+      <motion.span
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ repeat: Infinity, duration: 0.8, ease: "linear" }}
+        style={{ borderRight: '2px solid var(--accent)', paddingRight: '4px', marginLeft: '2px' }}
+      />
+    </>
+  )
+}
 
 export default function HeroHeader() {
   return (
@@ -51,13 +96,14 @@ export default function HeroHeader() {
           height: '100%',
           objectFit: 'cover',
           zIndex: 0,
-          opacity: 0.6 /* Subimos la opacidad para que se vea claramente */
+          opacity: 'var(--video-opacity)',
+          transition: 'opacity 0.3s ease'
         }}
       >
         {/* 
         Aqui va el video de fondo
         */}
-        <source src="/programmer.mp4" type="video/mp4" />
+        <source src="/prueba.MOV" type="video/mp4" />
       </video>
 
       {/* Filtro adaptable al tema (claro/oscuro) para que el texto y el menú sean siempre legibles */}
@@ -96,8 +142,8 @@ export default function HeroHeader() {
           {personal.name}
         </h1>
 
-        <h2 style={{ fontSize: 'clamp(1.2rem, 4vw, 2rem)', fontWeight: 600, color: 'var(--text2)', marginBottom: '1rem' }}>
-          Desarrollador Junior <span style={{ color: 'var(--text3)' }}>&</span> Entusiasta Tech
+        <h2 style={{ fontSize: 'clamp(1.2rem, 4vw, 2rem)', fontWeight: 600, color: 'var(--text2)', marginBottom: '1rem', minHeight: '3rem' }}>
+          <Typewriter text="Desarrollador Junior & Entusiasta Tech" delay={800} />
         </h2>
 
         <div style={{ fontSize: '0.85rem', fontWeight: 700, fontFamily: 'JetBrains Mono, monospace', color: 'var(--text3)', marginBottom: '2rem' }}>

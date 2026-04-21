@@ -25,9 +25,10 @@ html {
   --shadow:   rgba(0, 0, 0, 0.03);
   
   /* Hero Video Overlay - Light */
-  --hero-overlay-start: rgba(248, 250, 252, 0.85);
-  --hero-overlay-mid:   rgba(248, 250, 252, 0.95);
+  --hero-overlay-start: rgba(248, 250, 252, 0.4);
+  --hero-overlay-mid:   rgba(248, 250, 252, 0.7);
   --hero-overlay-end:   var(--bg);
+  --video-opacity:      0.85; /* More visible in light theme */
 }
 
 /* Dark theme - Deep Slate (Matched to screenshot style) */
@@ -51,6 +52,7 @@ html.dark {
   --hero-overlay-start: rgba(2, 6, 23, 0.4);
   --hero-overlay-mid:   rgba(2, 6, 23, 0.7);
   --hero-overlay-end:   var(--bg);
+  --video-opacity:      0.6; /* Subtler in dark theme */
 }
 
 /* ─── Reset ──────────────────────────────────────────────────── */

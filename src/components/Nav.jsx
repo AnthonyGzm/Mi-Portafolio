@@ -30,8 +30,8 @@ export default function Nav() {
         position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50,
         height: '70px', display: 'flex', alignItems: 'center',
         padding: '0 clamp(1.5rem, 5vw, 3rem)',
-        background: scrolled ? (dark ? 'rgba(2, 6, 23, 0.85)' : 'rgba(255, 255, 255, 0.85)') : 'transparent',
-        backdropFilter: scrolled ? 'blur(12px)' : 'none',
+        background: scrolled ? (dark ? 'rgba(2, 6, 23, 0.95)' : 'rgba(255, 255, 255, 0.95)') : (dark ? 'transparent' : 'rgba(255, 255, 255, 0.6)'),
+        backdropFilter: scrolled ? 'blur(12px)' : (dark ? 'none' : 'blur(8px)'),
         borderBottom: scrolled ? '1px solid var(--border)' : '1px solid transparent',
         transition: 'all 0.3s ease'
       }}>

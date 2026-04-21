@@ -58,10 +58,21 @@ export default function Projects() {
             <h3 style={{ fontSize: '1.4rem', fontWeight: 700, color: 'var(--text)', marginBottom: '0.75rem' }}>{p.title}</h3>
             <p style={{ fontSize: '0.9rem', color: 'var(--text2)', lineHeight: 1.6, marginBottom: '2rem', flex: 1 }}>{p.desc}</p>
             
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '2rem' }}>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.6rem', marginBottom: '2rem' }}>
               {p.tags.map(tag => (
-                <span key={tag} style={{ fontSize: '0.7rem', color: 'var(--text3)', fontFamily: 'JetBrains Mono, monospace' }}>
-                  #{tag}
+                <span key={tag} style={{ 
+                  fontSize: '0.75rem', 
+                  color: 'var(--text2)', 
+                  background: 'var(--bg2)', 
+                  padding: '0.35rem 0.85rem', 
+                  borderRadius: '100px',
+                  border: '1px solid var(--border)',
+                  fontWeight: 500,
+                  transition: 'border-color 0.2s, color 0.2s'
+                }}
+                onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--accent)'; e.currentTarget.style.color = 'var(--text)'; }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.color = 'var(--text2)'; }}>
+                  {tag}
                 </span>
               ))}
             </div>

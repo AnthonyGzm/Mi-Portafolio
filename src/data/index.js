@@ -51,9 +51,8 @@ export const stats = [
 export const skills = [
   { cat: 'Frontend', icon: 'Monitor', items: ['HTML5', 'CSS3', 'JavaScript', 'Bootstrap 5', 'Tailwind CSS', 'React'] },
   { cat: 'Backend', icon: 'Cpu', items: ['Node.js', 'Express.js', '.NET (MVC)', 'C#', 'Python', 'REST APIs', 'Php', 'Selenium'] },
-  { cat: 'Base de datos', icon: 'Database', items: ['SQL Server', 'MySQL', 'SSMS', 'T-SQL', 'Diseño relacional'] },
-  { cat: 'Herramientas', icon: 'Terminal', items: ['Git', 'GitHub', 'VS Code', 'Xampp', 'npm'] },
-  { cat: 'Metodologías', icon: 'Users', items: ['Scrum', 'Jira'] },
+  { cat: 'Base de datos', icon: 'Database', items: ['SQL Server', 'MySQL', 'T-SQL', 'MongoDB'] },
+  { cat: 'Herramientas', icon: 'Terminal', items: ['Git', 'GitHub', 'VS Code', 'Xampp', 'npm', 'Jira'] }
 ]
 
 export const projects = [
@@ -70,16 +69,6 @@ export const projects = [
   },
   {
     num: '02',
-    title: 'PrimeFit API',
-    year: '2025',
-    featured: false,
-    desc: 'Versión backend con Node.js/Express, autenticación por sesiones y SQL Server con tablas auto-seeded. Arquitectura cliente-servidor real y completa.',
-    tags: ['Node.js', 'Express', 'SQL Server', 'mssql'],
-    href: 'https://github.com/anthonygzm',
-    live: null,
-  },
-  {
-    num: '03',
     title: 'Identificador de Flores - Jardín Botánico RD',
     year: '2026',
     featured: false,
@@ -90,7 +79,7 @@ export const projects = [
     image: '/img/JardinBotanico.png'
   },
   {
-    num: '04',
+    num: '03',
     title: 'FitRoutine',
     year: '2024',
     featured: false,
