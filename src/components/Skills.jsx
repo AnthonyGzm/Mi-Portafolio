@@ -24,6 +24,7 @@ export default function Skills() {
       'Git': 'devicon-git-plain',
       'GitHub': 'devicon-github-original',
       'VS Code': 'devicon-vscode-plain',
+      'Visual Studio': 'devicon-visualstudio-plain',
       'Xampp': null,
       'npm': 'devicon-npm-original-wordmark',
       'Scrum': null,

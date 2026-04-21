@@ -52,7 +52,7 @@ export const skills = [
   { cat: 'Frontend', icon: 'Monitor', items: ['HTML5', 'CSS3', 'JavaScript', 'Bootstrap 5', 'Tailwind CSS', 'React'] },
   { cat: 'Backend', icon: 'Cpu', items: ['Node.js', 'Express.js', '.NET (MVC)', 'C#', 'Python', 'REST APIs', 'Php', 'Selenium'] },
   { cat: 'Base de datos', icon: 'Database', items: ['SQL Server', 'MySQL', 'T-SQL', 'MongoDB'] },
-  { cat: 'Herramientas', icon: 'Terminal', items: ['Git', 'GitHub', 'VS Code', 'Xampp', 'npm', 'Jira'] }
+  { cat: 'Herramientas', icon: 'Terminal', items: ['Git', 'GitHub', 'VS Code', 'Visual Studio', 'Xampp', 'npm', 'Jira'] }
 ]
 
 export const projects = [
