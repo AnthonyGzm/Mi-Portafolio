@@ -103,7 +103,7 @@ export default function HeroHeader() {
         {/* 
         Aqui va el video de fondo
         */}
-        <source src="/prueba.MOV" type="video/mp4" />
+        <source src="/background-hero.mov" type="video/mp4" />
       </video>
 
       {/* Filtro adaptable al tema (claro/oscuro) para que el texto y el menú sean siempre legibles */}
@@ -177,7 +177,7 @@ export default function HeroHeader() {
 
         <div style={{ display: 'flex', gap: '1.25rem' }}>
           {socials.map((s) => (
-            <a key={s.name} href={s.href} target="_blank" rel="noreferrer" style={{
+            <a key={s.name} href={s.href} target="_blank" rel="noreferrer" download={s.name === 'CV' ? 'CV_Anthony_Guzman.pdf' : undefined} style={{
               width: 44, height: 44, display: 'flex', alignItems: 'center', justifyContent: 'center',
               borderRadius: '50%', border: '1px solid var(--border)', color: 'var(--text2)',
               transition: 'all 0.2s', background: 'var(--bg2)'

@@ -65,7 +65,8 @@ export const projects = [
     tags: ['HTML5', 'CSS3', 'JavaScript', 'PHP', 'MySQL', 'PDO', 'Selenium', 'Pytest'],
     href: 'https://github.com/AnthonyGzm/Task-Manager',
     live: 'https://github.com/AnthonyGzm/Task-Manager',
-    image: '/img/TaskManager.png'
+    image: '/img/TaskManager.png',
+    video: '/Task_Manager_Demo.mov'
   },
   {
     num: '02',
@@ -137,6 +138,6 @@ export const education = [
 export const socials = [
   { name: 'GitHub', handle: '@anthonygzm', href: 'https://github.com/anthonygzm' },
   { name: 'LinkedIn', handle: 'anthonyguzm', href: 'https://linkedin.com/in/anthonyguzm/' },
-  { name: 'CV', handle: 'Descargar PDF', href: '#' },  // 👈 Pon tu link de Google Drive
+  { name: 'CV', handle: 'Descargar PDF', href: '/CV_Anthony_Guzman.pdf', download: true },
   { name: 'Email', handle: 'anthonyguzman2808@gmail.com', href: 'mailto:anthonyguzman2808@gmail.com' },
 ]

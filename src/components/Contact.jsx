@@ -126,7 +126,7 @@ export default function Contact() {
             <h3 style={{ fontSize: '1.2rem', fontWeight: 700, marginBottom: '1.5rem' }}>Conectar</h3>
             <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
               {socials.map((s) => (
-                <a key={s.name} href={s.href} target="_blank" rel="noreferrer" title={s.name} style={{
+                <a key={s.name} href={s.href} target="_blank" rel="noreferrer" title={s.name} download={s.download ? 'CV_Anthony_Guzman.pdf' : undefined} style={{
                   width: 44, height: 44, background: 'var(--bg)', border: '1px solid var(--border)', 
                   borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center',
                   color: 'var(--text2)', transition: 'background 0.2s, color 0.2s',
