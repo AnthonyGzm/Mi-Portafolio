@@ -1,13 +1,16 @@
 import { ThemeProvider } from './context/ThemeContext'
-import Nav        from './components/Nav'
-import HeroHeader from './components/HeroHeader'
-import Hero       from './components/Hero'
-import Projects   from './components/Projects'
-import Skills     from './components/Skills'
-import Contact    from './components/Contact'
-import Footer     from './components/Footer'
+import Nav          from './components/Nav'
+import HeroHeader   from './components/HeroHeader'
+import Hero         from './components/Hero'
+import Projects     from './components/Projects'
+import Skills       from './components/Skills'
+import Contact      from './components/Contact'
+import Footer       from './components/Footer'
+import Maintenance  from './components/Maintenance'
 import { ArrowUp } from 'lucide-react'
 import { useState, useEffect } from 'react'
+
+const MAINTENANCE_MODE = import.meta.env.VITE_MAINTENANCE_MODE === 'true'
 
 function ScrollToTop() {
   const [visible, setVisible] = useState(false)
@@ -53,6 +56,14 @@ function ScrollToTop() {
 }
 
 export default function App() {
+  if (MAINTENANCE_MODE) {
+    return (
+      <ThemeProvider>
+        <Maintenance />
+      </ThemeProvider>
+    )
+  }
+
   return (
     <ThemeProvider>
       <Nav />
