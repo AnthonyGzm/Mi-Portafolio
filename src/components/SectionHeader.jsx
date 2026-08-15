@@ -1,6 +1,6 @@
 import Reveal from './Reveal'
 
-export default function SectionHeader({ label, title, italic, subtitle }) {
+export default function SectionHeader({ label, title, italic, subtitle, icon }) {
   return (
     <>
       <Reveal>
@@ -25,6 +25,9 @@ export default function SectionHeader({ label, title, italic, subtitle }) {
       <Reveal delay={60}>
         <h2
           style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.75rem',
             fontSize: 'clamp(2rem, 5vw, 3.5rem)',
             fontWeight: 800,
             lineHeight: 1.1,
@@ -33,12 +36,15 @@ export default function SectionHeader({ label, title, italic, subtitle }) {
             marginBottom: subtitle ? '1.25rem' : '2.5rem',
           }}
         >
-          {title}{' '}
-          {italic && (
-            <span className="accent-text" style={{ fontStyle: 'italic', fontWeight: 900 }}>
-              {italic}
-            </span>
-          )}
+          {icon && <span className="accent-text" style={{ display: 'inline-flex' }}>{icon}</span>}
+          <span>
+            {title}{' '}
+            {italic && (
+              <span className="accent-text" style={{ fontStyle: 'italic', fontWeight: 900 }}>
+                {italic}
+              </span>
+            )}
+          </span>
         </h2>
       </Reveal>
 

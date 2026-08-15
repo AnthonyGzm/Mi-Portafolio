@@ -1,4 +1,5 @@
 import { ThemeProvider } from './context/ThemeContext'
+import { LanguageProvider } from './context/LanguageContext'
 import Nav          from './components/Nav'
 import HeroHeader   from './components/HeroHeader'
 import Hero         from './components/Hero'
@@ -9,10 +10,12 @@ import Footer       from './components/Footer'
 import Maintenance  from './components/Maintenance'
 import { ArrowUp } from 'lucide-react'
 import { useState, useEffect } from 'react'
+import { useContent } from './hooks/useContent'
 
 const MAINTENANCE_MODE = import.meta.env.VITE_MAINTENANCE_MODE === 'true'
 
 function ScrollToTop() {
+  const { common } = useContent()
   const [visible, setVisible] = useState(false)
 
   useEffect(() => {
@@ -48,7 +51,7 @@ function ScrollToTop() {
       }}
       onMouseEnter={e => e.currentTarget.style.transform = 'translateY(-3px)'}
       onMouseLeave={e => e.currentTarget.style.transform = 'translateY(0)'}
-      aria-label="Volver arriba"
+      aria-label={common.scrollTop}
     >
       <ArrowUp size={20} />
     </button>
@@ -59,23 +62,27 @@ export default function App() {
   if (MAINTENANCE_MODE) {
     return (
       <ThemeProvider>
-        <Maintenance />
+        <LanguageProvider>
+          <Maintenance />
+        </LanguageProvider>
       </ThemeProvider>
     )
   }
 
   return (
     <ThemeProvider>
-      <Nav />
-      <HeroHeader />
-      <main style={{ maxWidth: 1200, margin: '0 auto', padding: '0 1.5rem', display: 'flex', flexDirection: 'column' }}>
-        <Hero />
-        <Skills />
-        <Projects />
-        <Contact />
-      </main>
-      <Footer />
-      <ScrollToTop />
+      <LanguageProvider>
+        <Nav />
+        <HeroHeader />
+        <main style={{ maxWidth: 1200, margin: '0 auto', padding: '0 1.5rem', display: 'flex', flexDirection: 'column' }}>
+          <Hero />
+          <Skills />
+          <Projects />
+          <Contact />
+        </main>
+        <Footer />
+        <ScrollToTop />
+      </LanguageProvider>
     </ThemeProvider>
   )
 }

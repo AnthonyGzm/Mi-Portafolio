@@ -3,6 +3,8 @@ import emailjs from '@emailjs/browser'
 import { socials, personal } from '../data'
 import { motion } from 'framer-motion'
 import { Download, Mail, Send, MapPin, CheckCircle2 } from 'lucide-react'
+import { useContent } from '../hooks/useContent'
+import SectionHeader from './SectionHeader'
 
 const GithubIcon = ({ size = 16, ...props }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
@@ -25,9 +27,17 @@ const STATUS = { IDLE: 'idle', SENDING: 'sending', OK: 'ok', ERROR: 'error' }
 export default function Contact() {
   const formRef = useRef(null)
   const [status, setStatus] = useState(STATUS.IDLE)
+  const { sections, contact: t } = useContent()
 
   const handleSubmit = (e) => {
     e.preventDefault()
+
+    if (formRef.current.company.value) {
+      // Honeypot: campo invisible para humanos, si viene lleno es un bot.
+      formRef.current.reset()
+      return
+    }
+
     setStatus(STATUS.SENDING)
     emailjs.sendForm(
       import.meta.env.VITE_EMAILJS_SERVICE_ID,
@@ -46,37 +56,43 @@ export default function Contact() {
 
   return (
     <section id="contact" style={{ paddingTop: '5rem', paddingBottom: '6rem' }}>
-      <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-        <h2 style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--text)', marginBottom: '1rem' }}>
-          Contacto
-        </h2>
-        <p style={{ fontSize: '0.95rem', color: 'var(--text2)', maxWidth: 600, margin: '0 auto' }}>
-          ¿Listo para empezar tu próximo proyecto? Discutamos cómo puedo ayudar a llevar tus ideas a producción.
-        </p>
-      </div>
+      <SectionHeader
+        label={sections.contact.label}
+        title={sections.contact.title}
+        italic={sections.contact.italic}
+        subtitle={sections.contact.subtitle}
+      />
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))', gap: '1.5rem', alignItems: 'start' }}>
         {/* Left: Form */}
         <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="bento-card" style={{ padding: '2rem' }}>
-          <h3 style={{ fontSize: '1.2rem', fontWeight: 700, marginBottom: '1.5rem' }}>Enviar un mensaje</h3>
+          <h3 style={{ fontSize: '1.2rem', fontWeight: 700, marginBottom: '1.5rem' }}>{t.formTitle}</h3>
           <form ref={formRef} onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+            <input
+              type="text"
+              name="company"
+              tabIndex={-1}
+              autoComplete="off"
+              aria-hidden="true"
+              style={{ position: 'absolute', width: 1, height: 1, opacity: 0, pointerEvents: 'none' }}
+            />
             <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
               <div style={{ flex: '1 1 140px', display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
-                <label style={{ fontSize: '0.75rem', fontWeight: 600 }}>Nombre *</label>
-                <input name="from_name" type="text" placeholder="Tu nombre" required className="field" />
+                <label style={{ fontSize: '0.75rem', fontWeight: 600 }}>{t.nameLabel}</label>
+                <input name="from_name" type="text" placeholder={t.namePlaceholder} required maxLength={100} className="field" />
               </div>
               <div style={{ flex: '1 1 140px', display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
-                <label style={{ fontSize: '0.75rem', fontWeight: 600 }}>Email *</label>
-                <input name="from_email" type="email" placeholder="tu@email.com" required className="field" />
+                <label style={{ fontSize: '0.75rem', fontWeight: 600 }}>{t.emailFieldLabel}</label>
+                <input name="from_email" type="email" placeholder={t.emailPlaceholder} required maxLength={150} className="field" />
               </div>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
-              <label style={{ fontSize: '0.75rem', fontWeight: 600 }}>Asunto *</label>
-              <input name="subject" type="text" placeholder="Motivo de contacto" required className="field" />
+              <label style={{ fontSize: '0.75rem', fontWeight: 600 }}>{t.subjectLabel}</label>
+              <input name="subject" type="text" placeholder={t.subjectPlaceholder} required maxLength={150} className="field" />
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
-              <label style={{ fontSize: '0.75rem', fontWeight: 600 }}>Mensaje *</label>
-              <textarea name="message" rows={5} placeholder="Detalles de tu proyecto..." required className="field" />
+              <label style={{ fontSize: '0.75rem', fontWeight: 600 }}>{t.messageLabel}</label>
+              <textarea name="message" rows={5} placeholder={t.messagePlaceholder} required maxLength={2000} className="field" />
             </div>
             
             <input type="hidden" name="to_email" value={personal.email} />
@@ -88,7 +104,7 @@ export default function Contact() {
               cursor: status === STATUS.SENDING ? 'wait' : 'pointer',
               opacity: status === STATUS.SENDING ? 0.8 : 1, transition: 'background 0.2s', marginTop: '0.5rem'
             }}>
-              {status === STATUS.IDLE ? <><Send size={16}/> Enviar Mensaje</> : status === STATUS.OK ? 'Mensaje Enviado ✓' : status === STATUS.ERROR ? 'Error' : 'Enviando...'}
+              {status === STATUS.IDLE ? <><Send size={16}/> {t.send}</> : status === STATUS.OK ? t.sent : status === STATUS.ERROR ? t.error : t.sending}
             </button>
           </form>
         </motion.div>
@@ -98,14 +114,14 @@ export default function Contact() {
           
           {/* Info Card */}
           <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="bento-card" style={{ padding: '2rem' }}>
-            <h3 style={{ fontSize: '1.2rem', fontWeight: 700, marginBottom: '1.5rem' }}>Información</h3>
+            <h3 style={{ fontSize: '1.2rem', fontWeight: 700, marginBottom: '1.5rem' }}>{t.infoTitle}</h3>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
                 <div style={{ width: 44, height: 44, background: 'var(--bg)', border: '1px solid var(--border)', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   <Mail size={18} className="accent-text" />
                 </div>
                 <div>
-                  <div style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--text3)' }}>Email</div>
+                  <div style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--text3)' }}>{t.emailLabel}</div>
                   <div style={{ fontSize: '0.9rem', color: 'var(--text)' }}>{personal.email}</div>
                 </div>
               </div>
@@ -114,7 +130,7 @@ export default function Contact() {
                   <MapPin size={18} className="accent-text" />
                 </div>
                 <div>
-                  <div style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--text3)' }}>Ubicación</div>
+                  <div style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--text3)' }}>{t.locationLabel}</div>
                   <div style={{ fontSize: '0.9rem', color: 'var(--text)' }}>{personal.location}</div>
                 </div>
               </div>
@@ -123,7 +139,7 @@ export default function Contact() {
 
           {/* Socials Card */}
           <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, margin: '-20px' }} transition={{ delay: 0.1 }} className="bento-card" style={{ padding: '2rem' }}>
-            <h3 style={{ fontSize: '1.2rem', fontWeight: 700, marginBottom: '1.5rem' }}>Conectar</h3>
+            <h3 style={{ fontSize: '1.2rem', fontWeight: 700, marginBottom: '1.5rem' }}>{t.connectTitle}</h3>
             <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
               {socials.map((s) => (
                 <a key={s.name} href={s.href} target="_blank" rel="noreferrer" title={s.name} download={s.download ? 'CV_Anthony_Guzman.pdf' : undefined} style={{
@@ -143,8 +159,8 @@ export default function Contact() {
           <motion.div initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }} className="bento-card" style={{ padding: '1.5rem 2rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
             <CheckCircle2 size={18} style={{ color: '#10b981' }} />
             <div>
-              <div style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--text)' }}>Disponible para nuevos proyectos</div>
-              <div style={{ fontSize: '0.75rem', color: 'var(--text3)' }}>Asumiendo trabajo de gran impacto.</div>
+              <div style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--text)' }}>{t.availableTitle}</div>
+              <div style={{ fontSize: '0.75rem', color: 'var(--text3)' }}>{t.availableDesc}</div>
             </div>
           </motion.div>
         </div>

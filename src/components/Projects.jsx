@@ -1,6 +1,8 @@
 import { projects } from '../data'
 import { motion } from 'framer-motion'
 import { ExternalLink, Box } from 'lucide-react'
+import { useContent } from '../hooks/useContent'
+import SectionHeader from './SectionHeader'
 
 const GithubIcon = ({ size = 16, ...props }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
@@ -9,74 +11,87 @@ const GithubIcon = ({ size = 16, ...props }) => (
   </svg>
 )
 
+const overlayPillStyle = {
+  fontFamily: 'JetBrains Mono, monospace',
+  fontSize: '0.75rem',
+  fontWeight: 600,
+  padding: '0.25rem 0.65rem',
+  borderRadius: '6px',
+  backdropFilter: 'blur(6px)',
+}
+
 export default function Projects() {
+  const { sections, projectTitles, projectDescs, featuredLabel } = useContent()
+
   return (
     <section id="projects" style={{ paddingTop: '5rem', paddingBottom: '3rem' }}>
-      <div style={{ marginBottom: '3rem' }}>
-        <h2 style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--text)', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-          <Box size={28} className="accent-text" /> 
-          Proyectos Destacados
-        </h2>
-        <p style={{ fontSize: '0.95rem', color: 'var(--text2)', maxWidth: 600 }}>
-          Explora los sistemas integrales y mini-apps que he construido utilizando mi stack tecnológico.
-        </p>
-      </div>
+      <SectionHeader
+        label={sections.projects.label}
+        title={sections.projects.title}
+        italic={sections.projects.italic}
+        subtitle={sections.projects.subtitle}
+        icon={<Box size={28} />}
+      />
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))', gap: '1.5rem' }}>
         {projects.map((p, i) => (
-          <motion.div 
-            key={p.num} 
+          <motion.div
+            key={p.num}
             initial={{ opacity: 0, scale: 0.98 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true, margin: '-50px' }}
             transition={{ delay: i * 0.1, duration: 0.4 }}
-            className="bento-card project-card" 
+            className="bento-card project-card"
             style={{ padding: '0', display: 'flex', flexDirection: 'column' }}
           >
             {p.image && (
               <div style={{ width: '100%', height: '220px', overflow: 'hidden', borderBottom: '1px solid var(--border)', position: 'relative' }}>
-                <div style={{ position: 'absolute', inset: 0, background: 'var(--accent)', opacity: 0.05, zIndex: 1, pointerEvents: 'none' }} />
-                <img 
-                  src={p.image} 
-                  alt={p.title} 
+                <img
+                  src={p.image}
+                  alt={projectTitles[p.title] || p.title}
                   className="project-image"
-                  style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.4s ease' }} 
+                  style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.4s ease' }}
                 />
-              </div>
-            )}
-            
-            <div style={{ padding: '2rem', display: 'flex', flexDirection: 'column', flex: 1 }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1.25rem' }}>
-                <span style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '0.75rem', color: 'var(--text3)', background: 'var(--bg)', padding: '0.2rem 0.6rem', borderRadius: '4px', border: '1px solid var(--border)' }}>
+                <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 45%)', pointerEvents: 'none' }} />
+
+                <span style={{ ...overlayPillStyle, position: 'absolute', top: '0.85rem', left: '0.85rem', color: '#fff', background: 'rgba(0,0,0,0.4)' }}>
+                  {p.num}
+                </span>
+                <span style={{ ...overlayPillStyle, position: 'absolute', top: '0.85rem', right: '0.85rem', color: '#fff', background: 'rgba(0,0,0,0.4)' }}>
                   {p.year}
                 </span>
-              {p.featured && (
-                <span style={{ fontSize: '0.7rem', fontWeight: 600, color: 'var(--accent)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>OLED</span>
-              )}
-            </div>
-            
-            <h3 style={{ fontSize: '1.4rem', fontWeight: 700, color: 'var(--text)', marginBottom: '0.75rem' }}>{p.title}</h3>
-            <p style={{ fontSize: '0.9rem', color: 'var(--text2)', lineHeight: 1.6, marginBottom: '2rem', flex: 1 }}>{p.desc}</p>
-            
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.6rem', marginBottom: '2rem' }}>
-              {p.tags.map(tag => (
-                <span key={tag} style={{ 
-                  fontSize: '0.75rem', 
-                  color: 'var(--text2)', 
-                  background: 'var(--bg2)', 
-                  padding: '0.35rem 0.85rem', 
-                  borderRadius: '100px',
-                  border: '1px solid var(--border)',
-                  fontWeight: 500,
-                  transition: 'border-color 0.2s, color 0.2s'
-                }}
-                onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--accent)'; e.currentTarget.style.color = 'var(--text)'; }}
-                onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.color = 'var(--text2)'; }}>
-                  {tag}
-                </span>
-              ))}
-            </div>
-            
+
+                {p.featured && (
+                  <span style={{ ...overlayPillStyle, position: 'absolute', bottom: '0.85rem', left: '0.85rem', color: '#fff', background: 'var(--accent)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                    {featuredLabel}
+                  </span>
+                )}
+              </div>
+            )}
+
+            <div style={{ padding: '2rem', display: 'flex', flexDirection: 'column', flex: 1 }}>
+              <h3 style={{ fontSize: '1.4rem', fontWeight: 700, color: 'var(--text)', marginBottom: '0.75rem' }}>{projectTitles[p.title] || p.title}</h3>
+              <p style={{ fontSize: '0.9rem', color: 'var(--text2)', lineHeight: 1.6, marginBottom: '2rem', flex: 1 }}>{projectDescs[p.title] || p.desc}</p>
+
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.6rem', marginBottom: '2rem' }}>
+                {p.tags.map(tag => (
+                  <span key={tag} style={{
+                    fontSize: '0.75rem',
+                    color: 'var(--text2)',
+                    background: 'var(--bg2)',
+                    padding: '0.35rem 0.85rem',
+                    borderRadius: '100px',
+                    border: '1px solid var(--border)',
+                    fontWeight: 500,
+                    transition: 'border-color 0.2s, color 0.2s'
+                  }}
+                  onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--accent)'; e.currentTarget.style.color = 'var(--text)'; }}
+                  onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.color = 'var(--text2)'; }}>
+                    {tag}
+                  </span>
+                ))}
+              </div>
+
               <div style={{ borderTop: '1px solid var(--border)', paddingTop: '1.5rem', marginTop: 'auto', display: 'flex', gap: '1.5rem' }}>
                 {p.href && (
                   <a href={p.href} target="_blank" rel="noreferrer" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.85rem', fontWeight: 600, color: 'var(--text)', transition: 'color 0.2s' }}

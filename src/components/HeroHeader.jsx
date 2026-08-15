@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import { useState, useEffect } from 'react'
 import { personal, socials } from '../data'
+import { useContent } from '../hooks/useContent'
 import { Download, Mail, ArrowDown } from 'lucide-react'
 
 const GithubIcon = ({ size = 24, ...props }) => (
@@ -65,6 +66,8 @@ const Typewriter = ({ text, delay = 0 }) => {
 }
 
 export default function HeroHeader() {
+  const { heroHeader: t } = useContent()
+
   return (
     <section
       id="hero-header"
@@ -100,10 +103,7 @@ export default function HeroHeader() {
           transition: 'opacity 0.3s ease'
         }}
       >
-        {/* 
-        Aqui va el video de fondo
-        */}
-        <source src="/background-hero.mov" type="video/mp4" />
+        <source src="/background-hero.mp4" type="video/mp4" />
       </video>
 
       {/* Filtro adaptable al tema (claro/oscuro) para que el texto y el menú sean siempre legibles */}
@@ -128,7 +128,7 @@ export default function HeroHeader() {
         style={{ position: 'relative', zIndex: 10, display: 'flex', flexDirection: 'column', alignItems: 'center' }}
       >
         <span style={{ fontSize: '1rem', fontWeight: 600, color: 'var(--accent)', marginBottom: '1rem', letterSpacing: '0.05em' }}>
-          Hola, soy
+          {t.greeting}
         </span>
 
         <h1 style={{
@@ -143,7 +143,7 @@ export default function HeroHeader() {
         </h1>
 
         <h2 style={{ fontSize: 'clamp(1.2rem, 4vw, 2rem)', fontWeight: 600, color: 'var(--text2)', marginBottom: '1rem', minHeight: '3rem' }}>
-          <Typewriter text="Desarrollador Junior & Entusiasta Tech" delay={800} />
+          <Typewriter text={t.typewriter} delay={800} />
         </h2>
 
         <div style={{ fontSize: '0.85rem', fontWeight: 700, fontFamily: 'JetBrains Mono, monospace', color: 'var(--text3)', marginBottom: '2rem' }}>
@@ -151,7 +151,7 @@ export default function HeroHeader() {
         </div>
 
         <p style={{ fontSize: '1rem', color: 'var(--text2)', maxWidth: 650, lineHeight: 1.7, marginBottom: '2.5rem' }}>
-          Emprendedor digital y desarrollador apasionado por construir soluciones innovadoras, escalables y con un enfoque impecable en la experiencia de usuario y el rendimiento.
+          {t.tagline}
         </p>
 
         <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', justifyContent: 'center', marginBottom: '3rem' }}>
@@ -162,7 +162,7 @@ export default function HeroHeader() {
             onMouseEnter={e => e.currentTarget.style.transform = 'translateY(-2px)'}
             onMouseLeave={e => e.currentTarget.style.transform = 'translateY(0)'}
           >
-            Ver Proyectos
+            {t.viewProjects}
           </a>
           <a href="#contact" style={{
             background: 'transparent', border: '1px solid var(--border)', color: 'var(--text)', padding: '0.8rem 1.8rem', borderRadius: '8px',
@@ -171,7 +171,7 @@ export default function HeroHeader() {
             onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--accent)'; e.currentTarget.style.color = 'var(--accent)'; e.currentTarget.style.transform = 'translateY(-2px)' }}
             onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.color = 'var(--text)'; e.currentTarget.style.transform = 'translateY(0)' }}
           >
-            <Mail size={16} /> Contactar
+            <Mail size={16} /> {t.contact}
           </a>
         </div>
 

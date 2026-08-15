@@ -1,9 +1,13 @@
-import { personal, traits } from '../data'
+import { ICONS } from '../data/icons'
 import { motion } from 'framer-motion'
-import * as Icons from 'lucide-react'
+import { renderBio } from '../utils/renderBio'
+import { useContent } from '../hooks/useContent'
 import Experience from './Experience'
+import SectionHeader from './SectionHeader'
 
 export default function Hero() {
+  const { personal, traits, sections, heroBio } = useContent()
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: { opacity: 1, transition: { staggerChildren: 0.1, delayChildren: 0.1 } },
@@ -15,40 +19,33 @@ export default function Hero() {
 
   return (
     <section id="about" style={{ paddingTop: '5rem', paddingBottom: '3rem' }}>
-      <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-        <h2 style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--text)', marginBottom: '1rem' }}>
-          About Me
-        </h2>
-      </div>
+      <SectionHeader label={sections.about.label} title={sections.about.title} italic={sections.about.italic} />
 
-      <motion.div 
+      <motion.div
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, margin: '-50px' }}
-        style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))', gap: '1.5rem' }}
+        style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}
       >
-      {/* Left Column: Bio & Traits */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-        
         {/* Bio Card */}
         <motion.div variants={itemVariants} className="bento-card" style={{ padding: '2rem' }}>
           <h1 style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '1rem', color: 'var(--text)' }}>
-            Nativo digital construyendo <span className="accent-text">soluciones impactantes.</span>
+            {heroBio.title} <span className="accent-text">{heroBio.accent}</span>
           </h1>
           <div style={{ color: 'var(--text2)', fontSize: '0.9rem', lineHeight: 1.7 }}>
             {personal.bio.map((para, i) => (
-              <p key={i} dangerouslySetInnerHTML={{ __html: para }} style={{ marginBottom: i < personal.bio.length - 1 ? '1rem' : 0 }} />
+              <p key={i} style={{ marginBottom: i < personal.bio.length - 1 ? '1rem' : 0 }}>{renderBio(para)}</p>
             ))}
           </div>
         </motion.div>
 
-        {/* Traits 2x2 Grid */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1.5rem' }}>
-          {traits.map((t, i) => {
-            const Icon = Icons[t.icon]
+        {/* Traits Row */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1.5rem' }}>
+          {traits.map((t) => {
+            const Icon = ICONS[t.icon]
             return (
-              <motion.div key={t.title} variants={itemVariants} className="bento-card" style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column' }}>
+              <motion.div key={t.icon} variants={itemVariants} className="bento-card" style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column' }}>
                 <div style={{ marginBottom: '1rem', color: 'var(--text)', display: 'inline-flex', padding: '10px', background: 'var(--bg)', borderRadius: '8px', width: 'fit-content', border: '1px solid var(--border)' }}>
                   {Icon && <Icon size={20} />}
                 </div>
@@ -59,14 +56,10 @@ export default function Hero() {
           })}
         </div>
 
-      </div>
-
-      {/* Right Column: Experience */}
-      <motion.div variants={itemVariants} className="bento-card" style={{ padding: '2rem', display: 'flex', flexDirection: 'column' }}>
-        <h2 style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '2rem', color: 'var(--text)' }}>Experiencia y Educación</h2>
-        <Experience />
-      </motion.div>
-
+        {/* Experience & Education */}
+        <motion.div variants={itemVariants} className="bento-card" style={{ padding: '2rem' }}>
+          <Experience />
+        </motion.div>
       </motion.div>
     </section>
   )

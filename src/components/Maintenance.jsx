@@ -1,5 +1,6 @@
 import { Wrench, Download, Mail } from 'lucide-react'
 import { socials } from '../data'
+import { useContent } from '../hooks/useContent'
 
 const GithubIcon = ({ size = 18, ...props }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
@@ -19,6 +20,8 @@ const LinkedinIcon = ({ size = 18, ...props }) => (
 const SOCIAL_ICONS = { GitHub: <GithubIcon size={18} />, LinkedIn: <LinkedinIcon size={18} />, CV: <Download size={18} />, Email: <Mail size={18} /> }
 
 export default function Maintenance() {
+  const { maintenance } = useContent()
+
   return (
     <div
       style={{
@@ -50,12 +53,11 @@ export default function Maintenance() {
       </div>
 
       <h1 style={{ fontSize: '1.75rem', fontWeight: 700, marginBottom: '0.75rem' }}>
-        Sitio en mantenimiento
+        {maintenance.title}
       </h1>
 
       <p style={{ maxWidth: 480, color: 'var(--text2)', fontSize: '1rem', lineHeight: 1.6 }}>
-        Estoy trabajando en mejoras para el portafolio. Vuelve pronto, estará
-        listo en breve.
+        {maintenance.message}
       </p>
 
       <div style={{ display: 'flex', gap: '1rem', marginTop: '2rem' }}>
