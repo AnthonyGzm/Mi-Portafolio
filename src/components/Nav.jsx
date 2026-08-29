@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react'
+import { motion } from 'framer-motion'
 import { useActiveSection } from '../hooks/useActiveSection'
 import { useTheme } from '../context/ThemeContext'
 import { useLanguage } from '../context/LanguageContext'
 import { useContent } from '../hooks/useContent'
 import { personal } from '../data'
 import { Menu, X, Sun, Moon } from 'lucide-react'
+import ScrollProgress from './ScrollProgress'
 
 const NAV_IDS = [
   { href: '#hero-header', id: 'hero-header' },
@@ -90,7 +92,11 @@ export default function Nav() {
               >
                 {link.name}
                 {active === link.id && (
-                  <span style={{ position: 'absolute', bottom: '-4px', left: 0, right: 0, height: '2px', background: 'var(--accent)', borderRadius: '2px' }} />
+                  <motion.span
+                    layoutId="nav-underline"
+                    transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                    style={{ position: 'absolute', bottom: '-4px', left: 0, right: 0, height: '2px', background: 'var(--accent)', borderRadius: '2px' }}
+                  />
                 )}
               </a>
             ))}
@@ -129,6 +135,8 @@ export default function Nav() {
             </button>
           </div>
         </div>
+
+        <ScrollProgress />
       </nav>
 
       {/* Mobile Menu */}

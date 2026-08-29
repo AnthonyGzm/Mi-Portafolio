@@ -2,7 +2,7 @@ import { useRef, useState } from 'react'
 import emailjs from '@emailjs/browser'
 import { socials, personal } from '../data'
 import { motion } from 'framer-motion'
-import { Download, Mail, Send, MapPin, CheckCircle2 } from 'lucide-react'
+import { Download, Mail, Send, MapPin } from 'lucide-react'
 import { useContent } from '../hooks/useContent'
 import SectionHeader from './SectionHeader'
 
@@ -63,9 +63,9 @@ export default function Contact() {
         subtitle={sections.contact.subtitle}
       />
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))', gap: '1.5rem', alignItems: 'start' }}>
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1.5rem', alignItems: 'stretch' }}>
         {/* Left: Form */}
-        <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="bento-card" style={{ padding: '2rem' }}>
+        <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="bento-card" style={{ flex: '1.15 1 380px', padding: '2rem' }}>
           <h3 style={{ fontSize: '1.2rem', fontWeight: 700, marginBottom: '1.5rem' }}>{t.formTitle}</h3>
           <form ref={formRef} onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
             <input
@@ -109,61 +109,77 @@ export default function Contact() {
           </form>
         </motion.div>
 
-        {/* Right: Info Boxes */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-          
-          {/* Info Card */}
-          <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="bento-card" style={{ padding: '2rem' }}>
-            <h3 style={{ fontSize: '1.2rem', fontWeight: 700, marginBottom: '1.5rem' }}>{t.infoTitle}</h3>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                <div style={{ width: 44, height: 44, background: 'var(--bg)', border: '1px solid var(--border)', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <Mail size={18} className="accent-text" />
-                </div>
-                <div>
-                  <div style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--text3)' }}>{t.emailLabel}</div>
-                  <div style={{ fontSize: '0.9rem', color: 'var(--text)' }}>{personal.email}</div>
-                </div>
+        {/* Right: unified contact panel */}
+        <motion.div
+          initial={{ opacity: 0, x: 20 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          className="bento-card"
+          style={{
+            flex: '1 1 300px',
+            padding: '2rem',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '1.5rem',
+            background: 'linear-gradient(160deg, var(--accent-dim), var(--bg2) 55%)',
+          }}
+        >
+          {/* Availability status */}
+          <div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', fontFamily: 'JetBrains Mono, monospace', fontSize: '0.75rem', fontWeight: 700, color: '#10b981', marginBottom: '0.5rem' }}>
+              <span style={{ position: 'relative', display: 'flex', width: 8, height: 8 }}>
+                <span style={{ position: 'absolute', inset: 0, borderRadius: '50%', background: '#10b981', opacity: 0.4, animation: 'pulseDot 2s ease-in-out infinite' }} />
+                <span style={{ width: 8, height: 8, borderRadius: '50%', background: '#10b981' }} />
+              </span>
+              {t.availableTitle.toUpperCase()}
+            </div>
+            <p style={{ fontSize: '0.85rem', color: 'var(--text2)' }}>{t.availableDesc}</p>
+          </div>
+
+          <div style={{ height: 1, background: 'var(--border)' }} />
+
+          {/* Email / Location */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
+              <div style={{ width: 38, height: 38, flexShrink: 0, background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Mail size={16} className="accent-text" />
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                <div style={{ width: 44, height: 44, background: 'var(--bg)', border: '1px solid var(--border)', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <MapPin size={18} className="accent-text" />
-                </div>
-                <div>
-                  <div style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--text3)' }}>{t.locationLabel}</div>
-                  <div style={{ fontSize: '0.9rem', color: 'var(--text)' }}>{personal.location}</div>
-                </div>
+              <div>
+                <div style={{ fontSize: '0.7rem', fontWeight: 600, color: 'var(--text3)' }}>{t.emailLabel}</div>
+                <div style={{ fontSize: '0.88rem', color: 'var(--text)' }}>{personal.email}</div>
               </div>
             </div>
-          </motion.div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
+              <div style={{ width: 38, height: 38, flexShrink: 0, background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <MapPin size={16} className="accent-text" />
+              </div>
+              <div>
+                <div style={{ fontSize: '0.7rem', fontWeight: 600, color: 'var(--text3)' }}>{t.locationLabel}</div>
+                <div style={{ fontSize: '0.88rem', color: 'var(--text)' }}>{personal.location}</div>
+              </div>
+            </div>
+          </div>
 
-          {/* Socials Card */}
-          <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, margin: '-20px' }} transition={{ delay: 0.1 }} className="bento-card" style={{ padding: '2rem' }}>
-            <h3 style={{ fontSize: '1.2rem', fontWeight: 700, marginBottom: '1.5rem' }}>{t.connectTitle}</h3>
-            <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+          <div style={{ height: 1, background: 'var(--border)' }} />
+
+          {/* Socials */}
+          <div>
+            <div style={{ fontSize: '0.7rem', fontWeight: 600, color: 'var(--text3)', marginBottom: '0.75rem' }}>{t.connectTitle}</div>
+            <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
               {socials.map((s) => (
                 <a key={s.name} href={s.href} target="_blank" rel="noreferrer" title={s.name} download={s.download ? 'CV_Anthony_Guzman.pdf' : undefined} style={{
-                  width: 44, height: 44, background: 'var(--bg)', border: '1px solid var(--border)', 
+                  width: 40, height: 40, background: 'var(--bg2)', border: '1px solid var(--border)',
                   borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center',
                   color: 'var(--text2)', transition: 'background 0.2s, color 0.2s',
                 }}
                 onMouseEnter={e => { e.currentTarget.style.background = 'var(--surface)'; e.currentTarget.style.color = 'var(--text)' }}
-                onMouseLeave={e => { e.currentTarget.style.background = 'var(--bg)'; e.currentTarget.style.color = 'var(--text2)' }}>
+                onMouseLeave={e => { e.currentTarget.style.background = 'var(--bg2)'; e.currentTarget.style.color = 'var(--text2)' }}>
                   {SOCIAL_ICONS[s.name]}
                 </a>
               ))}
             </div>
-          </motion.div>
-
-          {/* Status Badge Custom */}
-          <motion.div initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }} className="bento-card" style={{ padding: '1.5rem 2rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
-            <CheckCircle2 size={18} style={{ color: '#10b981' }} />
-            <div>
-              <div style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--text)' }}>{t.availableTitle}</div>
-              <div style={{ fontSize: '0.75rem', color: 'var(--text3)' }}>{t.availableDesc}</div>
-            </div>
-          </motion.div>
-        </div>
+          </div>
+        </motion.div>
       </div>
     </section>
   )

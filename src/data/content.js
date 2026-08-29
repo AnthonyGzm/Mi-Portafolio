@@ -26,18 +26,21 @@ export const content = {
     skillCategories: { 'Frontend': 'Frontend', 'Backend': 'Backend', 'Base de datos': 'Base de datos', 'Herramientas': 'Herramientas' },
 
     projectTitles: {
+      'Cashva': 'Cashva',
       'Task Manager': 'Task Manager',
       'Identificador de Flores - Jardín Botánico RD': 'Identificador de Flores - Jardín Botánico RD',
       'FitRoutine': 'FitRoutine',
       'READvolution': 'READvolution',
     },
     projectDescs: {
+      'Cashva': 'Aplicación web de finanzas personales para gestionar ingresos, gastos, presupuestos, ahorros y metas financieras.',
       'Task Manager': 'Aplicación web desarrollada con PHP para la gestión de tareas (CRUD), incluyendo autenticación, manejo de sesiones y base de datos MySQL. Incorpora pruebas automatizadas end-to-end utilizando Selenium WebDriver y Pytest para garantizar la calidad del sistema.',
       'Identificador de Flores - Jardín Botánico RD': 'Sistema de reconocimiento de flores basado en Azure Computer Vision. Permite a los usuarios analizar imágenes mediante una interfaz simple e intuitiva, obteniendo identificación automática y resultados detallados.',
       'FitRoutine': 'Aplicación web desarrollada con ASP.NET Core 8 y SQL Server para la gestión de rutinas y actividades fitness. Permite a los usuarios registrar entrenamientos, organizar sesiones y dar seguimiento a su progreso mediante una interfaz moderna, responsiva y fácil de usar.',
       'READvolution': 'Aplicación web desarrollada para mejorar la experiencia de lectura, construida con ASP.NET 8 MVC y SQL Server. Incluye funcionalidades completas, optimización de rendimiento y corrección de errores, ofreciendo una experiencia fluida y lista para despliegue en producción.',
     },
     featuredLabel: 'Destacado',
+    inProgressLabel: 'En desarrollo',
 
     experience: [
       {
@@ -91,14 +94,14 @@ export const content = {
       about: { label: '01 / Sobre mí', title: 'Sobre', italic: 'mí' },
       skills: { label: '02 / Stack', title: 'Habilidades', italic: '& Tecnologías', subtitle: 'Un conjunto completo de herramientas para construir aplicaciones modernas, desde el concepto hasta el despliegue.' },
       projects: { label: '03 / Portafolio', title: 'Proyectos', italic: 'Destacados', subtitle: 'Explora los sistemas integrales y mini-apps que he construido utilizando mi stack tecnológico.' },
-      contact: { label: '04 / Contacto', title: 'Hablemos', italic: 'de tu proyecto', subtitle: '¿Listo para empezar tu próximo proyecto? Discutamos cómo puedo ayudar a llevar tus ideas a producción.' },
+      contact: { label: '04 / Contacto', title: 'Construyamos', italic: 'algo grande', subtitle: '¿Listo para empezar tu próximo proyecto? Discutamos cómo puedo ayudar a llevar tus ideas a producción.' },
     },
 
     heroBio: { title: 'Nativo digital construyendo', accent: 'soluciones impactantes.' },
 
     heroHeader: {
       greeting: 'Hola, soy',
-      typewriter: 'Desarrollador Junior & Entusiasta Tech',
+      typewriter: 'Desarrollador Junior',
       tagline: 'Emprendedor digital y desarrollador apasionado por construir soluciones innovadoras, escalables y con un enfoque impecable en la experiencia de usuario y el rendimiento.',
       viewProjects: 'Ver Proyectos',
       contact: 'Contactar',
@@ -159,18 +162,21 @@ export const content = {
     skillCategories: { 'Frontend': 'Frontend', 'Backend': 'Backend', 'Base de datos': 'Database', 'Herramientas': 'Tools' },
 
     projectTitles: {
+      'Cashva': 'Cashva',
       'Task Manager': 'Task Manager',
       'Identificador de Flores - Jardín Botánico RD': 'Flower Identifier - Jardín Botánico RD',
       'FitRoutine': 'FitRoutine',
       'READvolution': 'READvolution',
     },
     projectDescs: {
+      'Cashva': 'Personal finance web app for managing income, expenses, budgets, savings, and financial goals.',
       'Task Manager': 'Web application built with PHP for task management (CRUD), including authentication, session handling, and a MySQL database. Includes automated end-to-end tests using Selenium WebDriver and Pytest to ensure system quality.',
       'Identificador de Flores - Jardín Botánico RD': 'Flower recognition system based on Azure Computer Vision. Lets users analyze images through a simple, intuitive interface, getting automatic identification and detailed results.',
       'FitRoutine': 'Web application built with ASP.NET Core 8 and SQL Server for managing fitness routines and activities. Lets users log workouts, organize sessions, and track their progress through a modern, responsive, easy-to-use interface.',
       'READvolution': 'Web application built to improve the reading experience, using ASP.NET 8 MVC and SQL Server. Includes full functionality, performance optimization, and bug fixes, offering a smooth, production-ready experience.',
     },
     featuredLabel: 'Featured',
+    inProgressLabel: 'In Development',
 
     experience: [
       {
@@ -224,14 +230,14 @@ export const content = {
       about: { label: '01 / About me', title: 'About', italic: 'me' },
       skills: { label: '02 / Stack', title: 'Skills', italic: '& Technologies', subtitle: 'A complete set of tools for building modern applications, from concept to deployment.' },
       projects: { label: '03 / Portfolio', title: 'Featured', italic: 'Projects', subtitle: 'Explore the full systems and mini-apps I\'ve built using my tech stack.' },
-      contact: { label: '04 / Contact', title: 'Let\'s talk', italic: 'about your project', subtitle: 'Ready to start your next project? Let\'s discuss how I can help bring your ideas to production.' },
+      contact: { label: '04 / Contact', title: 'Let\'s build', italic: 'something great', subtitle: 'Ready to start your next project? Let\'s discuss how I can help bring your ideas to production.' },
     },
 
     heroBio: { title: 'Digital native building', accent: 'impactful solutions.' },
 
     heroHeader: {
       greeting: "Hi, I'm",
-      typewriter: 'Junior Developer & Tech Enthusiast',
+      typewriter: 'Junior Developer',
       tagline: 'Digital entrepreneur and developer passionate about building innovative, scalable solutions with an impeccable focus on user experience and performance.',
       viewProjects: 'View Projects',
       contact: 'Contact',

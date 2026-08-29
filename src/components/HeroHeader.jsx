@@ -142,13 +142,9 @@ export default function HeroHeader() {
           {personal.name}
         </h1>
 
-        <h2 style={{ fontSize: 'clamp(1.2rem, 4vw, 2rem)', fontWeight: 600, color: 'var(--text2)', marginBottom: '1rem', minHeight: '3rem' }}>
+        <h2 style={{ fontSize: 'clamp(1.2rem, 4vw, 2rem)', fontWeight: 600, color: 'var(--text2)', marginBottom: '2rem', minHeight: '3rem' }}>
           <Typewriter text={t.typewriter} delay={800} />
         </h2>
-
-        <div style={{ fontSize: '0.85rem', fontWeight: 700, fontFamily: 'JetBrains Mono, monospace', color: 'var(--text3)', marginBottom: '2rem' }}>
-          C# <span className="accent-text">•</span> .NET <span className="accent-text">•</span> SQL Server
-        </div>
 
         <p style={{ fontSize: '1rem', color: 'var(--text2)', maxWidth: 650, lineHeight: 1.7, marginBottom: '2.5rem' }}>
           {t.tagline}
