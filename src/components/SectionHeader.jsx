@@ -2,7 +2,13 @@ import Reveal from './Reveal'
 
 export default function SectionHeader({ label, title, italic, subtitle, icon }) {
   return (
-    <>
+    <div style={{ position: 'relative' }}>
+      <div
+        className="hero-glow"
+        style={{ width: 260, height: 260, top: '-4rem', left: '-6rem', background: 'radial-gradient(circle, var(--accent) 0%, transparent 70%)', zIndex: 0 }}
+      />
+
+      <div style={{ position: 'relative', zIndex: 1 }}>
       <Reveal>
         <div className="flex items-center gap-4 mb-14">
           <span
@@ -64,6 +70,7 @@ export default function SectionHeader({ label, title, italic, subtitle, icon }) 
           </p>
         </Reveal>
       )}
-    </>
+      </div>
+    </div>
   )
 }

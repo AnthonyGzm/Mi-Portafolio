@@ -4,12 +4,48 @@ import { motion } from 'framer-motion'
 import { useContent } from '../hooks/useContent'
 import SectionHeader from './SectionHeader'
 
-function IconTile({ children }) {
+const DEVICON_MAP = {
+  'HTML5': 'devicon-html5-plain',
+  'CSS3': 'devicon-css3-plain',
+  'JavaScript': 'devicon-javascript-plain',
+  'Bootstrap 5': 'devicon-bootstrap-plain',
+  'Tailwind CSS': 'devicon-tailwindcss-original',
+  'React': 'devicon-react-original',
+  'Node.js': 'devicon-nodejs-plain',
+  'Express.js': 'devicon-express-original',
+  '.NET (MVC)': 'devicon-dotnetcore-plain',
+  'C#': 'devicon-csharp-plain',
+  'Python': 'devicon-python-plain',
+  'REST APIs': null,
+  'Php': 'devicon-php-plain',
+  'Selenium': 'devicon-selenium-original',
+  'SQL Server': 'devicon-microsoftsqlserver-plain',
+  'MySQL': 'devicon-mysql-plain',
+  'PostgreSQL': 'devicon-postgresql-plain',
+  'Git': 'devicon-git-plain',
+  'GitHub': 'devicon-github-original',
+  'VS Code': 'devicon-vscode-plain',
+  'Visual Studio': 'devicon-visualstudio-plain',
+  'Xampp': null,
+  'npm': 'devicon-npm-original-wordmark',
+  'Scrum': null,
+  'Jira': 'devicon-jira-plain',
+  'SSMS': null,
+  'Diseño relacional': null,
+  'MongoDB': 'devicon-mongodb-plain',
+}
+
+function getDeviconClass(name) {
+  return DEVICON_MAP[name] ?? null
+}
+
+function IconTile({ children, size = 56 }) {
   return (
     <div
       style={{
-        width: 56,
-        height: 56,
+        width: size,
+        height: size,
+        flexShrink: 0,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -26,42 +62,49 @@ function IconTile({ children }) {
   )
 }
 
+function SkillIcon({ item, size = 28 }) {
+  const deviconClass = getDeviconClass(item)
+
+  if (deviconClass) {
+    return <i className={`${deviconClass} ${item !== 'GitHub' ? 'colored' : ''}`} style={{ fontSize: size / 16 + 'rem', ...(item === 'GitHub' ? { color: 'var(--text)' } : {}) }}></i>
+  }
+  if (item === 'Xampp') {
+    return <img src="https://cdn.simpleicons.org/xampp/FB7A24" height={size} width={size} alt="Xampp" />
+  }
+  if (item === 'REST APIs') {
+    return <ICONS.Network size={size - 2} color="#6366f1" />
+  }
+  return <span style={{ fontSize: '0.7rem', fontWeight: 'bold', color: 'var(--text2)' }}>{item.substring(0, 2).toUpperCase()}</span>
+}
+
+function TechMarquee({ items }) {
+  const track = [...items, ...items]
+  return (
+    <div
+      style={{
+        position: 'relative',
+        overflow: 'hidden',
+        marginBottom: '2rem',
+        maskImage: 'linear-gradient(to right, transparent, black 8%, black 92%, transparent)',
+        WebkitMaskImage: 'linear-gradient(to right, transparent, black 8%, black 92%, transparent)',
+      }}
+      className="marquee-wrapper"
+    >
+      <div className="marquee-track">
+        {track.map((item, i) => (
+          <div key={`${item}-${i}`} style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', flexShrink: 0 }}>
+            <IconTile size={40}><SkillIcon item={item} size={22} /></IconTile>
+            <span style={{ fontSize: '0.85rem', color: 'var(--text2)', fontWeight: 500, whiteSpace: 'nowrap' }}>{item}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
 export default function Skills() {
   const { skillCategories, sections } = useContent()
-
-  const getDeviconClass = (name) => {
-    const map = {
-      'HTML5': 'devicon-html5-plain',
-      'CSS3': 'devicon-css3-plain',
-      'JavaScript': 'devicon-javascript-plain',
-      'Bootstrap 5': 'devicon-bootstrap-plain',
-      'Tailwind CSS': 'devicon-tailwindcss-original',
-      'React': 'devicon-react-original',
-      'Node.js': 'devicon-nodejs-plain',
-      'Express.js': 'devicon-express-original',
-      '.NET (MVC)': 'devicon-dotnetcore-plain',
-      'C#': 'devicon-csharp-plain',
-      'Python': 'devicon-python-plain',
-      'REST APIs': null,
-      'Php': 'devicon-php-plain',
-      'Selenium': 'devicon-selenium-original',
-      'SQL Server': 'devicon-microsoftsqlserver-plain',
-      'MySQL': 'devicon-mysql-plain',
-      'PostgreSQL': 'devicon-postgresql-plain',
-      'Git': 'devicon-git-plain',
-      'GitHub': 'devicon-github-original',
-      'VS Code': 'devicon-vscode-plain',
-      'Visual Studio': 'devicon-visualstudio-plain',
-      'Xampp': null,
-      'npm': 'devicon-npm-original-wordmark',
-      'Scrum': null,
-      'Jira': 'devicon-jira-plain',
-      'SSMS': null,
-      'Diseño relacional': null,
-      'MongoDB': 'devicon-mongodb-plain'
-    };
-    return map[name] !== undefined ? map[name] : null;
-  };
+  const allTech = [...new Set(skills.flatMap(c => c.items))]
 
   return (
     <section id="skills" style={{ paddingTop: '5rem', paddingBottom: '3rem' }}>
@@ -71,6 +114,8 @@ export default function Skills() {
         italic={sections.skills.italic}
         subtitle={sections.skills.subtitle}
       />
+
+      <TechMarquee items={allTech} />
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem', marginBottom: '3rem' }}>
         {skills.map((cat, i) => {
@@ -93,25 +138,14 @@ export default function Skills() {
               </div>
 
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(70px, 1fr))', gap: '1.5rem', marginTop: '1.5rem' }}>
-                {cat.items.map(item => {
-                  const deviconClass = getDeviconClass(item);
-                  return (
-                    <div key={item} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.75rem' }}>
-                      <IconTile>
-                        {deviconClass ? (
-                          <i className={`${deviconClass} ${item !== 'GitHub' ? 'colored' : ''}`} style={{ fontSize: '1.75rem', ...(item === 'GitHub' ? { color: 'var(--text)' } : {}) }}></i>
-                        ) : item === 'Xampp' ? (
-                          <img src="https://cdn.simpleicons.org/xampp/FB7A24" height="28" width="28" alt="Xampp" />
-                        ) : item === 'REST APIs' ? (
-                          <ICONS.Network size={26} color="#6366f1" />
-                        ) : (
-                          <span style={{ fontSize: '0.7rem', fontWeight: 'bold', color: 'var(--text2)' }}>{item.substring(0, 2).toUpperCase()}</span>
-                        )}
-                      </IconTile>
-                      <span style={{ fontSize: '0.8rem', color: 'var(--text2)', fontWeight: 500, textAlign: 'center' }}>{item}</span>
-                    </div>
-                  );
-                })}
+                {cat.items.map(item => (
+                  <div key={item} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.75rem' }}>
+                    <IconTile>
+                      <SkillIcon item={item} />
+                    </IconTile>
+                    <span style={{ fontSize: '0.8rem', color: 'var(--text2)', fontWeight: 500, textAlign: 'center' }}>{item}</span>
+                  </div>
+                ))}
               </div>
             </motion.div>
           )

@@ -14,6 +14,34 @@ import { useContent } from './hooks/useContent'
 
 const MAINTENANCE_MODE = import.meta.env.VITE_MAINTENANCE_MODE === 'true'
 
+function useCardGlow() {
+  useEffect(() => {
+    let frame = null
+    let lastEvent = null
+
+    const update = () => {
+      frame = null
+      const card = lastEvent.target.closest?.('.bento-card')
+      if (card) {
+        const rect = card.getBoundingClientRect()
+        card.style.setProperty('--mx', `${lastEvent.clientX - rect.left}px`)
+        card.style.setProperty('--my', `${lastEvent.clientY - rect.top}px`)
+      }
+    }
+
+    const handleMove = (e) => {
+      lastEvent = e
+      if (!frame) frame = requestAnimationFrame(update)
+    }
+
+    window.addEventListener('mousemove', handleMove, { passive: true })
+    return () => {
+      window.removeEventListener('mousemove', handleMove)
+      if (frame) cancelAnimationFrame(frame)
+    }
+  }, [])
+}
+
 function ScrollToTop() {
   const { common } = useContent()
   const [visible, setVisible] = useState(false)
@@ -59,6 +87,8 @@ function ScrollToTop() {
 }
 
 export default function App() {
+  useCardGlow()
+
   if (MAINTENANCE_MODE) {
     return (
       <ThemeProvider>
