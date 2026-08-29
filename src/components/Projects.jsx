@@ -1,6 +1,6 @@
 import { projects } from '../data'
 import { motion } from 'framer-motion'
-import { ExternalLink, Box } from 'lucide-react'
+import { ExternalLink, Box, Construction } from 'lucide-react'
 import { useContent } from '../hooks/useContent'
 import SectionHeader from './SectionHeader'
 
@@ -21,7 +21,7 @@ const overlayPillStyle = {
 }
 
 export default function Projects() {
-  const { sections, projectTitles, projectDescs, featuredLabel } = useContent()
+  const { sections, projectTitles, projectDescs, featuredLabel, inProgressLabel } = useContent()
 
   return (
     <section id="projects" style={{ paddingTop: '5rem', paddingBottom: '3rem' }}>
@@ -44,34 +44,43 @@ export default function Projects() {
             className="bento-card project-card"
             style={{ padding: '0', display: 'flex', flexDirection: 'column' }}
           >
-            {p.image && (
-              <div style={{ width: '100%', height: '220px', overflow: 'hidden', borderBottom: '1px solid var(--border)', position: 'relative' }}>
+            <div style={{ width: '100%', height: '220px', overflow: 'hidden', borderBottom: '1px solid var(--border)', position: 'relative' }}>
+              {p.image ? (
                 <img
                   src={p.image}
                   alt={projectTitles[p.title] || p.title}
                   className="project-image"
                   style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.4s ease' }}
                 />
-                <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 45%)', pointerEvents: 'none' }} />
+              ) : (
+                <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--bg)' }}>
+                  <Construction size={40} style={{ color: 'var(--text3)', opacity: 0.4 }} />
+                </div>
+              )}
+              <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 45%)', pointerEvents: 'none' }} />
 
-                <span style={{ ...overlayPillStyle, position: 'absolute', top: '0.85rem', left: '0.85rem', color: '#fff', background: 'rgba(0,0,0,0.4)' }}>
-                  {p.num}
-                </span>
-                <span style={{ ...overlayPillStyle, position: 'absolute', top: '0.85rem', right: '0.85rem', color: '#fff', background: 'rgba(0,0,0,0.4)' }}>
-                  {p.year}
-                </span>
+              <span style={{ ...overlayPillStyle, position: 'absolute', top: '0.85rem', left: '0.85rem', color: '#fff', background: 'rgba(0,0,0,0.4)' }}>
+                {p.num}
+              </span>
+              <span style={{ ...overlayPillStyle, position: 'absolute', top: '0.85rem', right: '0.85rem', color: '#fff', background: 'rgba(0,0,0,0.4)' }}>
+                {p.year}
+              </span>
 
-                {p.featured && (
-                  <span style={{ ...overlayPillStyle, position: 'absolute', bottom: '0.85rem', left: '0.85rem', color: '#fff', background: 'var(--accent)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                    {featuredLabel}
-                  </span>
-                )}
-              </div>
-            )}
+              {p.inProgress && (
+                <span style={{ ...overlayPillStyle, position: 'absolute', bottom: '0.85rem', left: '0.85rem', color: '#fff', background: 'var(--accent)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                  {inProgressLabel}
+                </span>
+              )}
+              {p.featured && (
+                <span style={{ ...overlayPillStyle, position: 'absolute', bottom: '0.85rem', left: p.inProgress ? 'auto' : '0.85rem', right: p.inProgress ? '0.85rem' : 'auto', color: '#fff', background: 'var(--accent)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                  {featuredLabel}
+                </span>
+              )}
+            </div>
 
             <div style={{ padding: '2rem', display: 'flex', flexDirection: 'column', flex: 1 }}>
               <h3 style={{ fontSize: '1.4rem', fontWeight: 700, color: 'var(--text)', marginBottom: '0.75rem' }}>{projectTitles[p.title] || p.title}</h3>
-              <p style={{ fontSize: '0.9rem', color: 'var(--text2)', lineHeight: 1.6, marginBottom: '2rem', flex: 1 }}>{projectDescs[p.title] || p.desc}</p>
+              <p style={{ fontSize: '0.9rem', color: 'var(--text2)', lineHeight: 1.6, marginBottom: '2rem', flex: 1 }}>{projectDescs[p.title]}</p>
 
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.6rem', marginBottom: '2rem' }}>
                 {p.tags.map(tag => (
